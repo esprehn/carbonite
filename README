@@ -1,0 +1,5 @@
+
+This is an experiment in a futuristic self hosted DOM.
+
+Run with:
+    node --use-strict --harmony_classes --harmony_arrays main.js
