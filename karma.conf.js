@@ -30,6 +30,7 @@ module.exports = function(config) {
       'dom/text.js',
       'dom/documentfragment.js',
       'dom/domserializer.js',
+      'dom/domparser.js',
       'dom/*_test.js',
     ],
 
