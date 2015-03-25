@@ -7,8 +7,13 @@ class Element extends ParentNode {
     constructor(tagName, attributes, children, ownerDocument) {
         super(children, ownerDocument);
         this._tagName = String(tagName);
-        this._attributes = new Map(attributes);
+        this._attributes = new Map();
         Object.preventExtensions(this);
+        if (attributes) {
+            attributes.forEach(function(pair) {
+                this.setAttribute(pair[0], pair[1]);
+            }, this);
+        }
     }
 
     setAttribute(name, value) {

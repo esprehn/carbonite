@@ -57,7 +57,8 @@ describe("Element", function() {
         assert.isUndefined(element.getAttribute("name"));
     });
     it("should convert attribute names and values to strings", function() {
-        var element = new Element("div");
+        var element = new Element("div", [[/(?:)/, [1,2]]]);
+        assert.equal(element.getAttribute(/(?:)/), "1,2")
         element.setAttribute(["hidden"], true);
         assert.equal(element.getAttribute("hidden"), "true");
         element.setAttribute({hidden: true}, [1, 2, 3]);
