@@ -8,10 +8,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    // TODO(esprehn): This should include "chai" so we can skip adding an
-    // alias for var asset = chai.assert in every test file, need to update
-    // the third_party/node_modules first with that plugin though.
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'chai'],
 
     // mocha setup
     client: {
@@ -26,21 +23,17 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/mocha/mocha.js',
-      'bower_components/chai/chai.js',
-      'bower_components/sugar/release/sugar-full.development.js',
-      '*.js',
-      'model/**/*.js',
-      'lib/**/*.js',
-      'diff/**/*.js',
-      'linkify/**/*.js',
-      'selfie/**/*.js',
-      'resources_mocks.js',
+      'node_modules/chai/chai.js',
+      'dom/node.js',
+      'dom/parentnode.js',
+      'dom/element.js',
+      'dom/text.js',
+      'dom/*_test.js',
     ],
 
     // list of files to exclude
     exclude: [
       'karma.conf.js',
-      'ui/resources.js',
     ],
 
     // preprocess matching files before serving them to the browser
@@ -68,7 +61,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['ChromeCanary'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
