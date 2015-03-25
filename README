@@ -1,5 +1,11 @@
-
 This is an experiment in a futuristic self hosted DOM.
 
-Run with:
-    node --use-strict --harmony_classes --harmony_arrays main.js
+Run the tests with:
+     ./node_modules/karma/bin/karma start
+
+Note: This library requires ES6 classes, Maps, Sets, iterators, for-of and many
+other new features. It's not intended for use in browsers that don't support
+that technology.
+
+To use with io.js or node.js:
+    node --use-strict --harmony_classes --harmony_arrays
