@@ -19,6 +19,16 @@ describe("Element", function() {
         assert.equal(element.getAttribute("id"), "test");
         assert.equal(element.getAttribute("class"), "foo-bar baz");
     });
+    it("should accept children in the constructor", function() {
+        var e1 = new Element("e1");
+        var e2 = new Element("e2");
+        var e3 = new Element("e3");
+        var root = new Element("div", null, [e1, e2, e3]);
+        assert.equal(root.firstChild, e1);
+        assert.equal(root.lastChild, e3);
+        assert.deepEqual(root.getChildNodes(), [e1, e2, e3]);
+        assert.deepEqual(root.getChildElements(), [e1, e2, e3]);
+    });
     it("should allow setting attributes", function() {
         var element = new Element("div");
         assert.isUndefined(element.getAttribute("id"));

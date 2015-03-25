@@ -4,10 +4,12 @@
 "use strict";
 
 class ParentNode extends Node {
-    constructor(ownerDocument) {
+    constructor(children, ownerDocument) {
         super(ownerDocument);
         this._firstChild = null;
         this._lastChild = null;
+        if (children)
+            children.forEach(this.append, this);
     }
 
     get firstChild() {

@@ -4,8 +4,8 @@
 "use strict";
 
 class Element extends ParentNode {
-    constructor(tagName, attributes, ownerDocument) {
-        super(ownerDocument);
+    constructor(tagName, attributes, children, ownerDocument) {
+        super(children, ownerDocument);
         this._tagName = tagName;
         this._attributes = new Map(attributes);
         Object.preventExtensions(this);
