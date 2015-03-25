@@ -120,3 +120,5 @@ class Node {
         this._previousSibling = null;
     }
 }
+
+Object.preventExtensions(Node.prototype);

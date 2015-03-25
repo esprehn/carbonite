@@ -35,3 +35,5 @@ class Element extends ParentNode {
         return this._tagName;
     }
 }
+
+Object.preventExtensions(Element.prototype);

@@ -18,3 +18,5 @@ class Text extends Node {
         this._value = String(value);
     }
 }
+
+Object.preventExtensions(Text.prototype);

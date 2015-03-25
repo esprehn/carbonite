@@ -78,3 +78,5 @@ class ParentNode extends Node {
         return node;
     }
 }
+
+Object.preventExtensions(ParentNode.prototype);
