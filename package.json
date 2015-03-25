@@ -1,0 +1,19 @@
+{
+  "name": "Carbonite",
+  "version": "0.0.1",
+  "description": "An experiment in a JS rendering engine.",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:esprehn/carbonite"
+  },
+  "author": "Elliott Sprehn",
+  "license": "https://github.com/esprehn/carbonite/blob/master/LICENSE",
+  "dependencies": {
+    "css-layout": "git://github.com/facebook/css-layout"
+  },
+  "devDependencies": {
+    "karma": "~0.12.17",
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-mocha": "~0.1.6"
+  }
+}
