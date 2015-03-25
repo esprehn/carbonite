@@ -12,8 +12,10 @@
     "css-layout": "git://github.com/facebook/css-layout"
   },
   "devDependencies": {
-    "karma": "~0.12.17",
-    "karma-chrome-launcher": "~0.1.4",
-    "karma-mocha": "~0.1.6"
+    "mocha": "^2.2.1",
+    "chai": "^2.1.2",
+    "karma": "^0.12.17",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-mocha": "^0.1.6"
   }
 }
