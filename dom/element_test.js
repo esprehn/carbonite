@@ -94,7 +94,7 @@ describe("Element", function() {
         ]);
         var clone = root.cloneNode();
         assert.notEqual(clone, root);
-        var serializer = new DOMSerializer();
+        var serializer = new DomSerializer();
         assert.equal(serializer.serialize(root), '<div id="foo">Hello<span>World</span></div>');
     });
     it("should get the children as an array", function() {

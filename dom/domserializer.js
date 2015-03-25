@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 "use strict";
 
-class DOMSerializer {
+class DomSerializer {
     constructor() {
         Object.preventExtensions(this);
     }

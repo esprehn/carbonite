@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 "use strict";
 
-describe("DOMSerializer", function() {
+describe("DomSerializer", function() {
     it("should create a string from a dom tree", function() {
         var tree = new Element("div", null, [
             new Element("span", [["id", "a"]], [new Text("Hello")]),
@@ -20,7 +20,7 @@ describe("DOMSerializer", function() {
                 ]),
             ]),
         ]);
-        var serializer = new DOMSerializer();
+        var serializer = new DomSerializer();
         assert.equal(serializer.serialize(tree), '<div><span id="a">Hello</span><span id="b">World</span><section>Today<ul class="list red" id="my-id"><li>Bea</li><li>uti</li><li>ful</li></ul></section></div>');
     });
 });
