@@ -6,21 +6,21 @@
 class Element extends ParentNode {
     constructor(tagName, attributes, children, ownerDocument) {
         super(children, ownerDocument);
-        this._tagName = tagName;
+        this._tagName = String(tagName);
         this._attributes = new Map(attributes);
         Object.preventExtensions(this);
     }
 
     setAttribute(name, value) {
-        this._attributes.set(name, String(value));
+        this._attributes.set(String(name), String(value));
     }
 
     getAttribute(name) {
-        return this._attributes.get(name);
+        return this._attributes.get(String(name));
     }
 
     removeAttribute(name) {
-        this._attributes.delete(name);
+        this._attributes.delete(String(name));
     }
 
     getAttributes() {

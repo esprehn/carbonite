@@ -11,6 +11,10 @@ describe("Element", function() {
             element.tagName = "test";
         });
     });
+    it("should convert tag name to string", function() {
+        var element = new Element(["a","b"]);
+        assert.equal(element.tagName, "a,b");
+    });
     it("should accept attributes in the constructor", function() {
         var element = new Element("div", [
             ["id", "test"],
@@ -51,6 +55,16 @@ describe("Element", function() {
         element.removeAttribute("name");
         assert.isFalse(element.hasAttributes());
         assert.isUndefined(element.getAttribute("name"));
+    });
+    it("should convert attribute names and values to strings", function() {
+        var element = new Element("div");
+        element.setAttribute(["hidden"], true);
+        assert.equal(element.getAttribute("hidden"), "true");
+        element.setAttribute({hidden: true}, [1, 2, 3]);
+        assert.equal(element.getAttribute("[object Object]"), "1,2,3");
+        assert.equal(element.getAttribute({hidden: true}), "1,2,3");
+        element.removeAttribute({hidden: true})
+        assert.isUndefined(element.getAttribute("[object Object]"));
     });
     it("should allow getting all attributes", function() {
         var attributes = [

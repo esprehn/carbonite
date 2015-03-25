@@ -6,7 +6,7 @@
 class Text extends Node {
     constructor(value, ownerDocument) {
         super(ownerDocument);
-        this._value = value || "";
+        this._value = String(value || "");
         Object.preventExtensions(this);
     }
 
