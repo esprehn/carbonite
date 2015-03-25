@@ -78,6 +78,25 @@ describe("Element", function() {
             result.push(attr);
         assert.deepEqual(result, attributes);
     });
+    it("should allow cloning", function() {
+        var element = new Element("div", [["id", "foo"]]);
+        var clone = element.cloneNode();
+        assert.equal(clone.tagName, "div");
+        assert.equal(clone.getAttribute("id"), "foo");
+        assert.notEqual(clone, element);
+    });
+    it("should allow deep cloning", function() {
+        var root = new Element("div", [["id", "foo"]], [
+            new Text("Hello"),
+            new Element("span", null, [
+                new Text("World"),
+            ]),
+        ]);
+        var clone = root.cloneNode();
+        assert.notEqual(clone, root);
+        var serializer = new DOMSerializer();
+        assert.equal(serializer.serialize(root), '<div id="foo">Hello<span>World</span></div>');
+    });
     it("should get the children as an array", function() {
         var e1 = new Element("e1");
         var t2 = new Text("not an element");

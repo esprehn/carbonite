@@ -20,4 +20,18 @@ describe("Text", function() {
         text.textContent = {object: true};
         assert.equal(text.textContent, "[object Object]");
     });
+    it("should allow cloning", function() {
+        var text = new Text("Hello");
+        var clone = text.cloneNode();
+        assert.equal(text.textContent, "Hello");
+        assert.equal(clone.textContent, "Hello");
+        assert.notEqual(clone, text);
+    });
+    it("should ignore deep when cloning", function() {
+        var text = new Text("Hello");
+        var clone = text.cloneNode(true);
+        assert.equal(text.textContent, "Hello");
+        assert.equal(clone.textContent, "Hello");
+        assert.notEqual(clone, text);
+    });
 });

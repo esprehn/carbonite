@@ -10,10 +10,13 @@ class Element extends ParentNode {
         this._attributes = new Map();
         Object.preventExtensions(this);
         if (attributes) {
-            attributes.forEach(function(pair) {
+            for (let pair of attributes)
                 this.setAttribute(pair[0], pair[1]);
-            }, this);
         }
+    }
+
+    get tagName() {
+        return this._tagName;
     }
 
     setAttribute(name, value) {
@@ -36,8 +39,13 @@ class Element extends ParentNode {
         return this._attributes.size > 0;
     }
 
-    get tagName() {
-        return this._tagName;
+    cloneNode(deep) {
+        var clone = new Element(this.tagName, this.getAttributes());
+        if (deep) {
+            for (let child = this.firstChild; child; child = child.nextSibling)
+                clone.append(child.cloneNode(true));
+        }
+        return clone;
     }
 }
 

@@ -17,6 +17,10 @@ class Text extends Node {
     set textContent(value) {
         this._value = String(value);
     }
+
+    cloneNode(deep) {
+        return new Text(this.textContent);
+    }
 }
 
 Object.preventExtensions(Text.prototype);
