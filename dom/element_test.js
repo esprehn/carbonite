@@ -42,4 +42,15 @@ describe("Element", function() {
         assert.isFalse(element.hasAttributes());
         assert.isUndefined(element.getAttribute("name"));
     });
+    it("should allow getting all attributes", function() {
+        var attributes = [
+            ["foo", "bar"],
+            ["baz", "bam"]
+        ];
+        var element = new Element("div", attributes);
+        var result = [];
+        for (let attr of element.getAttributes())
+            result.push(attr);
+        assert.deepEqual(result, attributes);
+    });
 });
