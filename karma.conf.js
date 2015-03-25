@@ -28,6 +28,7 @@ module.exports = function(config) {
       'dom/parentnode.js',
       'dom/element.js',
       'dom/text.js',
+      'dom/domserializer.js',
       'dom/*_test.js',
     ],
 
