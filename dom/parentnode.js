@@ -4,8 +4,8 @@
 "use strict";
 
 class ParentNode extends Node {
-    constructor(children, ownerDocument) {
-        super(ownerDocument);
+    constructor(children) {
+        super();
         this._firstChild = null;
         this._lastChild = null;
         if (children)

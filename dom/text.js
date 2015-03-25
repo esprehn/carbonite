@@ -4,8 +4,8 @@
 "use strict";
 
 class Text extends Node {
-    constructor(value, ownerDocument) {
-        super(ownerDocument);
+    constructor(value) {
+        super();
         this._value = String(value || "");
         Object.preventExtensions(this);
     }

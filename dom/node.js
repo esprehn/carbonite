@@ -4,11 +4,10 @@
 "use strict";
 
 class Node {
-    constructor(ownerDocument) {
+    constructor() {
         this._parentNode = null;
         this._nextSibling = null;
         this._previousSibling = null;
-        this._ownerDocument = ownerDocument || null;
     }
 
     get parentNode() {
@@ -43,10 +42,6 @@ class Node {
                 return sibling;
         }
         return null;
-    }
-
-    get ownerDocument() {
-        return this._ownerDocument;
     }
 
     get textContent() {
