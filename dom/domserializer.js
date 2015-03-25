@@ -9,20 +9,28 @@ class DomSerializer {
     }
 
     serialize(node) {
-        if (node instanceof Text)
-            return node.textContent;
         if (node instanceof Element) {
             var result = "<" + node.tagName;
             for (var entry of node.getAttributes())
                 result += " " + entry[0] + "=" + "\"" + entry[1] + "\"";
             result += ">";
-            for (var child = node.firstChild; child; child = child.nextSibling)
-                result += this.serialize(child);
+            result += this.serializeChildren(node);
             result += "</" + node.tagName + ">";
             return result;
         }
+        if (node instanceof Text)
+            return node.textContent;
+        if (node instanceof DocumentFragment)
+            return this.serializeChildren(node);
         throw new Error("Unknown node type.");
+    }
+
+    serializeChildren(node) {
+        var result = "";
+        for (var child = node.firstChild; child; child = child.nextSibling)
+            result += this.serialize(child);
+        return result;
     }
 }
 
-Object.preventExtensions(DOMSerializer.prototype);
+Object.preventExtensions(DomSerializer.prototype);

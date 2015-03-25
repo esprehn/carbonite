@@ -92,10 +92,10 @@ describe("Element", function() {
                 new Text("World"),
             ]),
         ]);
-        var clone = root.cloneNode();
+        var clone = root.cloneNode(true);
         assert.notEqual(clone, root);
         var serializer = new DomSerializer();
-        assert.equal(serializer.serialize(root), '<div id="foo">Hello<span>World</span></div>');
+        assert.equal(serializer.serialize(clone), '<div id="foo">Hello<span>World</span></div>');
     });
     it("should get the children as an array", function() {
         var e1 = new Element("e1");
