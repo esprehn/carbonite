@@ -4,6 +4,13 @@
 "use strict";
 
 describe("Element", function() {
+    it("should have an immutable tag name", function() {
+        var element = new Element("div");
+        assert.equal(element.tagName, "div");
+        assert.throws(function() {
+            element.tagName = "test";
+        });
+    });
     it("should accept attributes in the constructor", function() {
         var element = new Element("div", [
             ["id", "test"],
