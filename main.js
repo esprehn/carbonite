@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var Element = require("./element");
-var Text = require("./text");
-
 var element = new Element("div");
 element.setAttribute("id", "root");
 var span1 = element.append(new Element("span1"));

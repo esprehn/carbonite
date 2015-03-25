@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var Node = require("./node");
-
 class ParentNode extends Node {
     constructor(ownerDocument) {
         super(ownerDocument);
@@ -79,6 +77,3 @@ class ParentNode extends Node {
         return node;
     }
 }
-
-if (exports)
-    module.exports = ParentNode;

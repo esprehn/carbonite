@@ -119,6 +119,3 @@ class Node {
         this._previousSibling = null;
     }
 }
-
-if (exports)
-    module.exports = Node;

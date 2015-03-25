@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-var Node = require("./node");
-
 class Text extends Node {
     constructor(value, ownerDocument) {
         super(ownerDocument);
@@ -19,6 +17,3 @@ class Text extends Node {
         this._value = String(value);
     }
 }
-
-if (exports)
-    module.exports = Text;
