@@ -28,7 +28,7 @@ class Element extends ParentNode {
     }
 
     hasAttributes() {
-        return this._attributes.size() > 0;
+        return this._attributes.size > 0;
     }
 
     get tagName() {

@@ -14,7 +14,7 @@ describe("Element", function() {
     });
     it("should allow setting attributes", function() {
         var element = new Element("div");
-        assert.equal(element.getAttribute("id"), undefined);
+        assert.isUndefined(element.getAttribute("id"));
         element.setAttribute("id", "the id");
         element.setAttribute("hidden", "true");
         assert.equal(element.getAttribute("id"), "the id");
@@ -22,5 +22,17 @@ describe("Element", function() {
         element.setAttribute("id", "different value");
         assert.equal(element.getAttribute("id"), "different value");
         assert.equal(element.getAttribute("hidden"), "true");
+    });
+    it("should allow removing attributes", function() {
+        var element = new Element("div");
+        assert.isFalse(element.hasAttributes());
+        assert.isUndefined(element.getAttribute("name"));
+        element.removeAttribute("name");
+        element.setAttribute("name", "awesome");
+        assert.isTrue(element.hasAttributes());
+        assert.equal(element.getAttribute("name"), "awesome");
+        element.removeAttribute("name");
+        assert.isFalse(element.hasAttributes());
+        assert.isUndefined(element.getAttribute("name"));
     });
 });
