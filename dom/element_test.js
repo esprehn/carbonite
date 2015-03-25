@@ -63,4 +63,35 @@ describe("Element", function() {
             result.push(attr);
         assert.deepEqual(result, attributes);
     });
+    it("should get the children as an array", function() {
+        var e1 = new Element("e1");
+        var t2 = new Text("not an element");
+        var e3 = new Element("e3");
+        var root = new Element("div", null, [e1, t2, e3]);
+        assert.deepEqual(root.getChildNodes(), [e1, t2, e3]);
+        assert.deepEqual(root.getChildElements(), [e1, e3]);
+    });
+    it("should allow tree traversal", function() {
+        var e1 = new Element("e1");
+        var t2 = new Text("not an element");
+        var e3 = new Element("e3");
+        var root = new Element("div", null, [e1, t2, e3]);
+        assert.equal(e1.parentNode, root);
+        assert.equal(t2.parentNode, root);
+        assert.equal(e3.parentNode, root);
+        assert.equal(root.firstChild, e1);
+        assert.equal(e1.nextSibling, t2);
+        assert.equal(t2.nextSibling, e3);
+        assert.isNull(e3.nextSibling);
+        assert.equal(root.lastChild, e3);
+        assert.equal(e3.previousSibling, t2);
+        assert.equal(t2.previousSibling, e1);
+        assert.isNull(e1.previousSibling);
+        assert.isNull(e1.previousElementSibling);
+        assert.equal(t2.previousElementSibling, e1);
+        assert.equal(e3.previousElementSibling, e1);
+        assert.equal(e1.nextElementSibling, e3);
+        assert.equal(t2.nextElementSibling, e3);
+        assert.isNull(e3.nextElementSibling);
+    });
 });
