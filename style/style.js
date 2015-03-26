@@ -11,6 +11,17 @@
 //
 class Style {
     constructor() {
+        // Fonts.
+        this.fontStyle = "normal";
+        this.fontVariant = "normal";
+        this.fontWeight = "normal";
+        this.fontSize = 11;
+        this.lineHeight = "normal";
+        this.fontFamily = "Helvetica, sans-serif";
+
+        // The below properties can't be here by default because the css-layout
+        // library checks them with the "in" operator.
+
         // Box size.
         // this.width = 0;
         // this.height = 0;
@@ -53,6 +64,21 @@ class Style {
 
         // Can't freeze this object, css-layout library expects a property bag.
         // Object.preventExtensions(this);
+    }
+
+    createCanvasFont() {
+        return this.fontStyle + " " +
+            this.fontVariant + " " +
+            this.fontWeight + " " +
+            this.fontSize + "px/" +
+            this.computedLineHeight + "px " +
+            this.fontFamily;
+    }
+
+    get computedLineHeight() {
+        if (this.lineHeight == "normal")
+            return this.fontSize * 1.2;
+        return this.lineHeight;
     }
 }
 

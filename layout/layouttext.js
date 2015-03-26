@@ -4,14 +4,40 @@
 "use strict";
 
 class LayoutText extends LayoutNode {
-    constructor(value, style) {
+    constructor(text, style) {
         super(style);
-        this.value = value || "";
+        this.text = text || "";
         Object.preventExtensions(this);
     }
 
     get debugName() {
         return "#text";
+    }
+
+    createLines(width) {
+        var lines = [];
+        var canvas = document.createElement("canvas");
+        var context = canvas.getContext("2d");
+        context.font = this.style.createCanvasFont();
+        var i = 0;
+        var words = this.text.split(" ");
+        while (i < words.length) {
+            var lineText = words[i++];
+            var lineMetrics = context.measureText(lineText);
+            while (i < words.length) {
+                var nextText = lineText + " " + words[i];
+                var nextMetrics = context.measureText(nextText);
+                if (nextMetrics.width < width) {
+                    lineText = nextText;
+                    lineMetrics = nextMetrics;
+                    ++i;
+                } else {
+                    break;
+                }
+            }
+            lines.push(new LayoutLine(lineText, this.style, lineMetrics));
+        }
+        return lines;
     }
 }
 
