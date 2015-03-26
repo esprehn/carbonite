@@ -80,6 +80,14 @@ class Style {
             return this.fontSize * 1.2;
         return this.lineHeight;
     }
+
+    clone() {
+        var result = new Style();
+        for (var key in this) {
+            result[key] = this[key];
+        }
+        return result;
+    }
 }
 
 Object.preventExtensions(Style.prototype);

@@ -5,13 +5,29 @@
 
 class LayoutText extends LayoutNode {
     constructor(text, style) {
-        super(style);
+        super(style.clone());
         this.text = text || "";
         Object.preventExtensions(this);
+        // TODO(esprehn): css-layout makes us bind a method. Maybe we should
+        // create a special subclass of Style for Text and keep the value there?
+        // https://github.com/facebook/css-layout/issues/63
+        this.style.measure = this.measureText.bind(this);
     }
 
     get debugName() {
         return "#text";
+    }
+
+    measureText(width) {
+        var lines = this.createLines(width);
+        var maxWidth = 0;
+        lines.forEach(function(line) {
+            maxWidth = Math.max(line.width, maxWidth);
+        });
+        return {
+            width: maxWidth,
+            height: this.style.computedLineHeight * lines.length,
+        };
     }
 
     createLines(width) {

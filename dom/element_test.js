@@ -136,7 +136,6 @@ describe("Element", function() {
         assert.instanceOf(tree, LayoutBox);
         assert.instanceOf(tree.children[0].children[0], LayoutText);
         assert.instanceOf(tree.children[0].children[0].style, Style);
-        assert.equal(tree.children[0].children[0].style, tree.children[0].style);
         assert.equal(tree.serialize(),
                 "<box(div) width=0 height=0 top=0 left=0>" + 
                     "<box(span) width=0 height=0 top=0 left=0>" +
