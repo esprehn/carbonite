@@ -8,6 +8,7 @@ class Element extends ParentNode {
         super(children);
         this._tagName = String(tagName);
         this._attributes = new Map();
+        this._style = new Style();
         Object.preventExtensions(this);
         if (attributes) {
             for (let pair of attributes)
@@ -46,6 +47,14 @@ class Element extends ParentNode {
                 clone.append(child.cloneNode(true));
         }
         return clone;
+    }
+
+    get style() {
+        return this._style;
+    }
+
+    createLayoutNode() {
+        return new LayoutBox(this.tagName, this.style);
     }
 }
 

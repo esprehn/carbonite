@@ -103,6 +103,14 @@ class Node {
         return node;
     }
 
+    createLayoutNode() {
+        throw new Error("Cannot create layout node.");
+    }
+
+    createLayoutTree() {
+        return this.createLayoutNode();
+    }
+
     remove() {
         if (!this.parentNode)
             return;

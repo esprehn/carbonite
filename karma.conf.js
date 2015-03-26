@@ -28,8 +28,11 @@ module.exports = function(config) {
       'dom/parentnode.js',
       'dom/*.js',
       'style/*.js',
-      'style/*_test.js',
+      'layout/layoutnode.js',
+      'layout/*.js',
       'dom/*_test.js',
+      'style/*_test.js',
+      'layout/*_test.js',
     ],
 
     // list of files to exclude

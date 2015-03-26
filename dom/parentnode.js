@@ -79,6 +79,13 @@ class ParentNode extends Node {
             this._lastChild = node;
         return node;
     }
+
+    createLayoutTree() {
+        var root = this.createLayoutNode();
+        for (var child = this.firstChild; child; child = child.nextSibling)
+            root.children.push(child.createLayoutTree());
+        return root;
+    }
 }
 
 Object.preventExtensions(ParentNode.prototype);

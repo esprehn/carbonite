@@ -3,15 +3,15 @@
 // found in the LICENSE file.
 "use strict";
 
-class ComputedStyle {
+class Style {
     constructor() {
-        // Box size
-        this.width = "auto";
-        this.height = "auto";
-        this.left = "auto";
-        this.right = "auto";
-        this.top = "auto";
-        this.bottom = "auto";
+        // Box size, undefined = auto.
+        this.width = undefined;
+        this.height = undefined;
+        this.left = undefined;
+        this.right = undefined;
+        this.top = undefined;
+        this.bottom = undefined;
 
         // Margins
         this.margin = 0;
@@ -49,4 +49,4 @@ class ComputedStyle {
     }
 }
 
-Object.preventExtensions(ComputedStyle.prototype);
+Object.preventExtensions(Style.prototype);

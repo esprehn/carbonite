@@ -128,4 +128,23 @@ describe("Element", function() {
         assert.equal(t2.nextElementSibling, e3);
         assert.isNull(e3.nextElementSibling);
     });
+    it("should create a layout tree", function() {
+        var parser = new DomParser("<div><span>Hello</span><span>World</span></div>");
+        var fragment = parser.parse();
+        var root = fragment.firstChild;
+        var tree = root.createLayoutTree();
+        assert.instanceOf(tree, LayoutBox);
+        assert.instanceOf(tree.children[0].children[0], LayoutText);
+        assert.instanceOf(tree.children[0].children[0].style, Style);
+        assert.equal(tree.children[0].children[0].style, tree.children[0].style);
+        assert.equal(tree.serialize(),
+                "<box(div) width=0 height=0 top=0 left=0>" + 
+                    "<box(span) width=0 height=0 top=0 left=0>" +
+                        "<#text width=0 height=0 top=0 left=0 />" +
+                    "</box(span)>" +
+                    "<box(span) width=0 height=0 top=0 left=0>" +
+                        "<#text width=0 height=0 top=0 left=0 />" +
+                    "</box(span)>" +
+                "</box(div)>");
+    });
 });

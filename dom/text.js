@@ -21,6 +21,10 @@ class Text extends Node {
     cloneNode(deep) {
         return new Text(this.textContent);
     }
+
+    createLayoutNode() {
+        return new LayoutText(this.textContent, this.parentNode.style);
+    }
 }
 
 Object.preventExtensions(Text.prototype);
