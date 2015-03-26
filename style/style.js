@@ -3,49 +3,56 @@
 // found in the LICENSE file.
 "use strict";
 
+// TODO(esprehn): css-layout library inspects the Style objects using the "in"
+// operator so they need to be property bags with varying style properties
+// instead of a fixed structure like below.
+//
+// https://github.com/facebook/css-layout/issues/64
+//
 class Style {
     constructor() {
-        // Box size, undefined = auto.
-        this.width = undefined;
-        this.height = undefined;
-        this.left = undefined;
-        this.right = undefined;
-        this.top = undefined;
-        this.bottom = undefined;
+        // Box size.
+        // this.width = 0;
+        // this.height = 0;
+        // this.left = 0;
+        // this.right = 0;
+        // this.top = 0;
+        // this.bottom = 0;
 
         // Margins
-        this.margin = 0;
-        this.marginLeft = 0;
-        this.marginRight = 0;
-        this.marginTop = 0;
-        this.marginBottom = 0;
+        // this.margin = 0;
+        // this.marginLeft = 0;
+        // this.marginRight = 0;
+        // this.marginTop = 0;
+        // this.marginBottom = 0;
 
         // Padding
-        this.padding = 0;
-        this.paddingLeft = 0;
-        this.paddingRight = 0;
-        this.paddingTop = 0;
-        this.paddingBottom = 0;
+        // this.padding = 0;
+        // this.paddingLeft = 0;
+        // this.paddingRight = 0;
+        // this.paddingTop = 0;
+        // this.paddingBottom = 0;
 
         // Borders
-        this.borderWidth = 0;
-        this.borderLeftWidth = 0;
-        this.borderRightWidth = 0;
-        this.borderTopWidth = 0;
-        this.borderBottomWidth = 0;
+        // this.borderWidth = 0;
+        // this.borderLeftWidth = 0;
+        // this.borderRightWidth = 0;
+        // this.borderTopWidth = 0;
+        // this.borderBottomWidth = 0;
 
         // Positioning
-        this.position = "relative";
+        // this.position = "relative";
 
         // Flex
-        this.flexDirection = "column";
-        this.justifyContent = "flex-start";
-        this.alignItems = "stretch";
-        this.alignSelf = "stretch";
-        this.flex = 0;
-        this.flexWrap = "nowrap";
+        // this.flexDirection = "column";
+        // this.justifyContent = "flex-start";
+        // this.alignItems = "stretch";
+        // this.alignSelf = "stretch";
+        // this.flex = 0;
+        // this.flexWrap = "nowrap";
 
-        Object.preventExtensions(this);
+        // Can't freeze this object, css-layout library expects a property bag.
+        // Object.preventExtensions(this);
     }
 }
 

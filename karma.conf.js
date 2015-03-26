@@ -22,14 +22,15 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/mocha/mocha.js',
-      'node_modules/chai/chai.js',
       'dom/node.js',
       'dom/parentnode.js',
       'dom/*.js',
       'style/*.js',
       'layout/layoutnode.js',
       'layout/*.js',
+      'node_modules/css-layout/src/Layout.js',
+      'node_modules/mocha/mocha.js',
+      'node_modules/chai/chai.js',
       'dom/*_test.js',
       'style/*_test.js',
       'layout/*_test.js',
