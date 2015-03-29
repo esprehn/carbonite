@@ -84,7 +84,8 @@ class Style {
     clone() {
         var result = new Style();
         for (var key in this) {
-            result[key] = this[key];
+            if (this.hasOwnProperty(key))
+                result[key] = this[key];
         }
         return result;
     }

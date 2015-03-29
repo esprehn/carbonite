@@ -12,7 +12,7 @@ class DocumentFragment extends ParentNode {
     cloneNode(deep) {
         var clone = new DocumentFragment();
         if (deep) {
-            for (let child = this.firstChild; child; child = child.nextSibling)
+            for (var child = this.firstChild; child; child = child.nextSibling)
                 clone.append(child.cloneNode(true));
         }
         return clone;

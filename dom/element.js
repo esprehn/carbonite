@@ -11,7 +11,7 @@ class Element extends ParentNode {
         this._style = new Style();
         Object.preventExtensions(this);
         if (attributes) {
-            for (let pair of attributes)
+            for (var pair of attributes)
                 this.setAttribute(pair[0], pair[1]);
         }
     }
@@ -43,7 +43,7 @@ class Element extends ParentNode {
     cloneNode(deep) {
         var clone = new Element(this.tagName, this.getAttributes());
         if (deep) {
-            for (let child = this.firstChild; child; child = child.nextSibling)
+            for (var child = this.firstChild; child; child = child.nextSibling)
                 clone.append(child.cloneNode(true));
         }
         return clone;

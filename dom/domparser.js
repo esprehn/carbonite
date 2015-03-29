@@ -5,16 +5,16 @@
 
 (function(exports) {
 
-const GREATER_THAN = 62;
-const LESS_THAN = 60;
-const EQUALS = 61;
-const SINGLE_QUOTE = 39;
-const DOUBLE_QUOTE = 34;
-const SPACE = 32;
-const NEW_LINE = 10;
-const CARRIAGE_RETURN = 13;
-const TAB = 9;
-const SLASH = 47;
+var GREATER_THAN = 62;
+var LESS_THAN = 60;
+var EQUALS = 61;
+var SINGLE_QUOTE = 39;
+var DOUBLE_QUOTE = 34;
+var SPACE = 32;
+var NEW_LINE = 10;
+var CARRIAGE_RETURN = 13;
+var TAB = 9;
+var SLASH = 47;
 
 class DomParser {
     constructor(string) {

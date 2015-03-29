@@ -74,7 +74,7 @@ describe("Element", function() {
         ];
         var element = new Element("div", attributes);
         var result = [];
-        for (let attr of element.getAttributes())
+        for (var attr of element.getAttributes())
             result.push(attr);
         assert.deepEqual(result, attributes);
     });
