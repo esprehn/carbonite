@@ -18,7 +18,7 @@ const SLASH = 47;
 
 class DomParser {
     constructor(string) {
-        this.string = string;
+        this.string = String(string || "");
         this.state = "parseText";
         this.offset = 0;
         this.stack = [new DocumentFragment()];
@@ -26,7 +26,7 @@ class DomParser {
     }
 
     parse() {
-        while (this.hasMoreChars()) {
+        while (this.offset < this.string.length) {
             // console.log({state: this.state}, this.string.substring(this.offset));
             this[this.state]();
         }
@@ -34,7 +34,7 @@ class DomParser {
     }
 
     parseText() {
-        var value = this.consumeStringUntil(LESS_THAN);
+        var value = this.consumeUntilChar(LESS_THAN);
         if (value) {
             var text = new Text(value);
             this.currentNode().append(text);
@@ -88,7 +88,7 @@ class DomParser {
 
     parseAttribute() {
         this.skipWhitespace();
-        var name = this.consumeAttriuteName();
+        var name = this.consumeAttributeName();
         var value = "";
         this.skipWhitespace();
         var charCode = this.currentCharCode();
@@ -98,7 +98,7 @@ class DomParser {
             charCode = this.currentCharCode();
             if (charCode == SINGLE_QUOTE || charCode == DOUBLE_QUOTE) {
                 this.offset++;
-                value = this.consumeStringUntil(charCode);
+                value = this.consumeUntilChar(charCode);
                 this.offset++;
             } else {
                 value = this.consumeTagIdent();
@@ -123,68 +123,48 @@ class DomParser {
         // console.log("parseAttribute", name, value);
     }
 
-    consumeAttriuteName() {
-        var startOffset = this.offset;
-        while (this.hasMoreChars() && !this.isWhitespaceChar()) {
-            var charCode = this.currentCharCode();
-            if (charCode == EQUALS || charCode == GREATER_THAN || charCode == SLASH)
-                break;
-            this.advance();
-        }
-        if (startOffset < this.offset)
-            return this.string.substring(this.offset, startOffset);
-        return null;
-    }
-
     consumeTagIdent() {
+        return this.consumeUntilPattern(/[>\/\r\n\t ]/gm);
+    }
+
+    consumeAttributeName() {
+        return this.consumeUntilPattern(/[=>\/\r\n\t ]/gm);
+    }
+
+    consumeUntilPattern(pattern) {
         var startOffset = this.offset;
-        while (this.hasMoreChars() && !this.isWhitespaceChar()) {
-            var charCode = this.currentCharCode();
-            if (charCode == GREATER_THAN || charCode == SLASH)
-                break;
-            this.advance();
-        }
+        this.skipUntilPattern(pattern);
         if (startOffset < this.offset)
-            return this.string.substring(this.offset, startOffset);
+            return this.string.substring(startOffset, this.offset);
         return null;
     }
 
-    consumeStringUntil(stopChar) {
+    consumeUntilChar(stopChar) {
         var startOffset = this.offset;
-        while (this.hasMoreChars()) {
-            var charCode = this.currentCharCode();
-            if (charCode == stopChar)
-                break;
-            this.advance();
-        }
+        this.offset = this.string.indexOf(String.fromCharCode(stopChar), startOffset);
+        if (this.offset == -1)
+            this.offset = this.string.length;
         if (startOffset < this.offset)
-            return this.string.substring(this.offset, startOffset);
+            return this.string.substring(startOffset, this.offset);
         return null;
     }
 
     skipWhitespace() {
-        while (this.hasMoreChars() && this.isWhitespaceChar())
-            this.advance();
+        if (this.currentCharCode() > SPACE)
+            return;
+        this.skipUntilPattern(/[^\r\n\t ]/gm);
     }
 
-    isWhitespaceChar() {
-        var charCode = this.currentCharCode();
-        return charCode == SPACE ||
-            charCode == NEW_LINE ||
-            charCode == CARRIAGE_RETURN ||
-            charCode == TAB;
+    skipUntilPattern(pattern) {
+        pattern.lastIndex = this.offset;
+        if (pattern.test(this.string))
+            this.offset = pattern.lastIndex - 1;
+        else
+            this.offset = this.string.length;
     }
 
     currentCharCode() {
         return this.string.charCodeAt(this.offset);
-    }
-
-    hasMoreChars() {
-        return this.offset < this.string.length;
-    }
-
-    advance() {
-        this.offset++;
     }
 
     currentNode() {
