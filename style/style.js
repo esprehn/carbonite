@@ -84,6 +84,9 @@ class Style {
     clone() {
         var result = new Style();
         for (var key in this) {
+            // TODO(esprehn): WebKit makes computedLineHeight enumerable on the
+            // proto, v8 doesn't. So we need to check for own properties here.
+            // File a bug.
             if (this.hasOwnProperty(key))
                 result[key] = this[key];
         }
