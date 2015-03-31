@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 "use strict";
 
-var Element = (function() {
+(function(exports) {
 
 var emptyAttributes = new Map();
 
@@ -68,5 +68,6 @@ class Element extends ParentNode {
 
 Object.preventExtensions(Element.prototype);
 
-return Element;
-})();
+exports.Element = Element;
+
+})(this);

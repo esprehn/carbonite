@@ -192,6 +192,8 @@ class DomParser {
     }
 }
 
+Object.preventExtensions(DomParser.prototype);
+
 exports.DomParser = DomParser;
 
 })(this);
