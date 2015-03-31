@@ -9,7 +9,8 @@
   "author": "Elliott Sprehn",
   "license": "https://github.com/esprehn/carbonite/blob/master/LICENSE",
   "dependencies": {
-    "css-layout": "git://github.com/facebook/css-layout"
+    "css-layout": "git://github.com/facebook/css-layout",
+    "fabric-browserify": "^1.4.13"
   },
   "devDependencies": {
     "chai": "^2.1.2",

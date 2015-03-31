@@ -26,7 +26,7 @@ class DomParser {
     }
 
     parse() {
-        while (this.offset < this.string.length) {
+        while (this.hasMoreChars()) {
             // console.log({state: this.state}, this.string.substring(this.offset));
             this[this.state]();
         }
@@ -34,12 +34,12 @@ class DomParser {
     }
 
     parseText() {
-        var value = this.consumeUntilChar(LESS_THAN);
+        var value = this.consumeStringUntil(LESS_THAN);
         if (value) {
             var text = new Text(value);
             this.currentNode().append(text);
         }
-        if (this.currentCharCode() == LESS_THAN) {
+        if (this.currentCharCode() === LESS_THAN) {
             this.offset++;
             this.state = "parseTagName";
         }
@@ -48,7 +48,7 @@ class DomParser {
 
     parseTagName() {
         var endTag = false;
-        if (this.currentCharCode() == SLASH) {
+        if (this.currentCharCode() === SLASH) {
             this.offset++;
             endTag = true;
         }
@@ -59,18 +59,18 @@ class DomParser {
             while (node.tagName != tagName && this.stack.length > 1) {
                 this.stack.pop();
             }
-            if (node.tagName == tagName)
+            if (node.tagName === tagName)
                  this.stack.pop();
             this.skipWhitespace();
-            if (this.currentCharCode() == GREATER_THAN)
+            if (this.currentCharCode() === GREATER_THAN)
                 this.offset++;
             this.state = "parseText";
         } else if (tagName && !endTag) {
             var element = new Element(tagName);
             this.currentNode().append(element);
-            if (this.currentCharCode() == SLASH) {
+            if (this.currentCharCode() === SLASH) {
                 this.offset++;
-                if (this.currentCharCode() == GREATER_THAN) {
+                if (this.currentCharCode() === GREATER_THAN) {
                     this.offset++;
                     endTag = true;
                 }
@@ -92,13 +92,13 @@ class DomParser {
         var value = "";
         this.skipWhitespace();
         var charCode = this.currentCharCode();
-        if (charCode == EQUALS) {
+        if (charCode === EQUALS) {
             this.offset++;
             this.skipWhitespace();
             charCode = this.currentCharCode();
-            if (charCode == SINGLE_QUOTE || charCode == DOUBLE_QUOTE) {
+            if (charCode === SINGLE_QUOTE || charCode === DOUBLE_QUOTE) {
                 this.offset++;
-                value = this.consumeUntilChar(charCode);
+                value = this.consumeStringUntil(charCode);
                 this.offset++;
             } else {
                 value = this.consumeTagIdent();
@@ -109,12 +109,12 @@ class DomParser {
         this.skipWhitespace();
         charCode = this.currentCharCode();
         var endTag = false;
-        if (charCode == SLASH) {
+        if (charCode === SLASH) {
             this.offset++;
             endTag = true;
         }
         charCode = this.currentCharCode();
-        if (charCode == GREATER_THAN) {
+        if (charCode === GREATER_THAN) {
             if (endTag)
                 this.stack.pop();
             this.offset++;
@@ -123,56 +123,74 @@ class DomParser {
         // console.log("parseAttribute", name, value);
     }
 
-    consumeTagIdent() {
-        return this.consumeUntilPattern(/[>\/\r\n\t ]/gm);
-    }
-
     consumeAttributeName() {
-        return this.consumeUntilPattern(/[=>\/\r\n\t ]/gm);
+        var startOffset = this.offset;
+        while (this.hasMoreChars() && !this.isWhitespaceChar()) {
+            var charCode = this.currentCharCode();
+            if (charCode === EQUALS || charCode === GREATER_THAN || charCode === SLASH)
+                break;
+            this.advance();
+        }
+        if (startOffset < this.offset)
+            return this.string.substring(this.offset, startOffset);
+        return "";
     }
 
-    consumeUntilPattern(pattern) {
+    consumeTagIdent() {
         var startOffset = this.offset;
-        this.skipUntilPattern(pattern);
+        while (this.hasMoreChars() && !this.isWhitespaceChar()) {
+            var charCode = this.currentCharCode();
+            if (charCode === GREATER_THAN || charCode === SLASH)
+                break;
+            this.advance();
+        }
         if (startOffset < this.offset)
-            return this.string.substring(startOffset, this.offset);
-        return null;
+            return this.string.substring(this.offset, startOffset);
+        return "";
     }
 
-    consumeUntilChar(stopChar) {
+    consumeStringUntil(stopChar) {
         var startOffset = this.offset;
-        this.offset = this.string.indexOf(String.fromCharCode(stopChar), startOffset);
-        if (this.offset == -1)
-            this.offset = this.string.length;
+        while (this.hasMoreChars()) {
+            var charCode = this.currentCharCode();
+            if (charCode === stopChar)
+                break;
+            this.advance();
+        }
         if (startOffset < this.offset)
-            return this.string.substring(startOffset, this.offset);
-        return null;
+            return this.string.substring(this.offset, startOffset);
+        return "";
     }
 
     skipWhitespace() {
-        if (this.currentCharCode() > SPACE)
-            return;
-        this.skipUntilPattern(/[^\r\n\t ]/gm);
+        while (this.hasMoreChars() && this.isWhitespaceChar())
+            this.advance();
     }
 
-    skipUntilPattern(pattern) {
-        pattern.lastIndex = this.offset;
-        if (pattern.test(this.string))
-            this.offset = pattern.lastIndex - 1;
-        else
-            this.offset = this.string.length;
+    isWhitespaceChar() {
+        var charCode = this.currentCharCode();
+        return charCode === SPACE ||
+            charCode === NEW_LINE ||
+            charCode === CARRIAGE_RETURN ||
+            charCode === TAB;
     }
 
     currentCharCode() {
         return this.string.charCodeAt(this.offset);
     }
 
+    hasMoreChars() {
+        return this.offset < this.string.length;
+    }
+
+    advance() {
+        this.offset++;
+    }
+
     currentNode() {
         return this.stack[this.stack.length - 1];
     }
 }
-
-Object.preventExtensions(DomParser.prototype);
 
 exports.DomParser = DomParser;
 

@@ -3,12 +3,16 @@
 // found in the LICENSE file.
 "use strict";
 
+var Element = (function() {
+
+var emptyAttributes = new Map();
+
 class Element extends ParentNode {
     constructor(tagName, attributes, children) {
         super(children);
         this._tagName = String(tagName);
-        this._attributes = new Map();
-        this._style = new Style();
+        this._attributes = emptyAttributes;
+        this._style = null;
         Object.preventExtensions(this);
         if (attributes) {
             for (var pair of attributes)
@@ -21,11 +25,13 @@ class Element extends ParentNode {
     }
 
     setAttribute(name, value) {
+        if (this._attributes === emptyAttributes)
+            this._attributes = new Map();
         this._attributes.set(String(name), String(value));
     }
 
     getAttribute(name) {
-        return this._attributes.get(String(name));
+        return this._attributes.get(String(name)) || "";
     }
 
     removeAttribute(name) {
@@ -50,6 +56,8 @@ class Element extends ParentNode {
     }
 
     get style() {
+        if (!this._style)
+            this._style = new Style();
         return this._style;
     }
 
@@ -59,3 +67,6 @@ class Element extends ParentNode {
 }
 
 Object.preventExtensions(Element.prototype);
+
+return Element;
+})();

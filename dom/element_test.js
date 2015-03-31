@@ -35,7 +35,7 @@ describe("Element", function() {
     });
     it("should allow setting attributes", function() {
         var element = new Element("div");
-        assert.isUndefined(element.getAttribute("id"));
+        assert.equal(element.getAttribute("id"), "");
         element.setAttribute("id", "the id");
         element.setAttribute("hidden", "true");
         assert.equal(element.getAttribute("id"), "the id");
@@ -47,14 +47,14 @@ describe("Element", function() {
     it("should allow removing attributes", function() {
         var element = new Element("div");
         assert.isFalse(element.hasAttributes());
-        assert.isUndefined(element.getAttribute("name"));
+        assert.equal(element.getAttribute("name"), "");
         element.removeAttribute("name");
         element.setAttribute("name", "awesome");
         assert.isTrue(element.hasAttributes());
         assert.equal(element.getAttribute("name"), "awesome");
         element.removeAttribute("name");
         assert.isFalse(element.hasAttributes());
-        assert.isUndefined(element.getAttribute("name"));
+        assert.equal(element.getAttribute("name"), "");
     });
     it("should convert attribute names and values to strings", function() {
         var element = new Element("div", [[/(?:)/, [1,2]]]);
@@ -65,7 +65,7 @@ describe("Element", function() {
         assert.equal(element.getAttribute("[object Object]"), "1,2,3");
         assert.equal(element.getAttribute({hidden: true}), "1,2,3");
         element.removeAttribute({hidden: true})
-        assert.isUndefined(element.getAttribute("[object Object]"));
+        assert.equal(element.getAttribute("[object Object]"), "");
     });
     it("should allow getting all attributes", function() {
         var attributes = [
