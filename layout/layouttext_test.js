@@ -37,19 +37,4 @@ describe("LayoutText", function() {
             {width: 60, text: "today?"},
         ]);
     });
-    it("should compute text size", function() {
-        var box = new LayoutBox("div", new Style());
-        box.style.width = 100;
-        var text = new LayoutText("Hello there, how are you today?", new Style());
-        box.children = [text];
-        box.updateLayout();
-        assert.equal(box.layout.width, 100);
-        assert.equal(Math.round(box.layout.height), 26);
-        assert.equal(box.layout.top, 0);
-        assert.equal(box.layout.left, 0);
-        assert.equal(text.layout.width, 100);
-        assert.equal(Math.round(text.layout.height), 26);
-        assert.equal(text.layout.top, 0);
-        assert.equal(text.layout.left, 0);
-    });
 });

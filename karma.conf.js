@@ -28,7 +28,6 @@ module.exports = function(config) {
       'style/*.js',
       'layout/layoutnode.js',
       'layout/*.js',
-      'node_modules/css-layout/src/Layout.js',
       'node_modules/mocha/mocha.js',
       'node_modules/chai/chai.js',
       'dom/*_test.js',

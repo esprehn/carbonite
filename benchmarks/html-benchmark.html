@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<style>
+#output {
+    white-space: pre;
+}
+</style>
+
+<script src="../dom/node.js"></script>
+<script src="../style/style.js"></script>
+<script src="../dom/parentnode.js"></script>
+<script src="../dom/documentfragment.js"></script>
+<script src="../dom/element.js"></script>
+<script src="../dom/text.js"></script>
+<script src="../dom/domparser.js"></script>
+
+<div id="output"></div>
+
+<script>
+var compareInnerHtml = true;
+var multipler = 1;
+
+var output = document.getElementById("output");
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "wikipedia-markup.txt");
+xhr.responseType = "text";
+
+function treeSize(node) {
+    var count = 0;
+    for (var child = node.firstChild; child; child = child.nextSibling)
+        count += 1 + treeSize(child);
+    return count;
+}
+
+xhr.onload = function() {
+    var markup = "";
+    if (String.prototype.repeat) {
+        markup = xhr.responseText.repeat(multipler);
+    } else {
+        for (var i = 0; i < multipler; i++)
+            markup += xhr.responseText;
+    }
+    var t, element;
+    if (compareInnerHtml) {
+        t = Date.now();
+        element = document.createElement("div");
+        element.innerHTML = markup;
+        output.textContent += 'innerHTML time: ' + (Date.now() - t) + "\n";
+    }
+    output.textContent += 'markup size: ' + (markup.length) + "\n";
+    t = Date.now();
+    var parser = new DomParser(markup);
+    var fragment = parser.parse();
+    output.textContent += 'domparser time: ' + (Date.now() - t) + "\n";
+    if (fragment) {
+        output.textContent += 'frag nodes: ' + treeSize(fragment) + "\n";
+    }
+    if (compareInnerHtml) {
+        output.textContent += 'elem nodes: ' + (element.querySelectorAll("*").length) + "\n";
+    }
+};
+
+xhr.onerror = function() {
+    console.log(xhr.status);
+};
+
+xhr.send();
+</script>

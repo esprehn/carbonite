@@ -6,19 +6,8 @@
 class LayoutNode {
     constructor(style) {
         this.style = style;
+        this.rect = new LayoutRect();
         this.children = [];
-        // css-layout requires these to start as undefined, otherwise it assumes
-        // the value is already computed and won't attempt to update it.
-        this.layout = {
-            width: undefined,
-            height: undefined,
-            top: 0,
-            left: 0,
-        };
-    }
-
-    updateLayout(parentMaxWidth) {
-        computeLayout.computeLayout(this, parentMaxWidth);
     }
 
     get debugName() {
@@ -27,10 +16,10 @@ class LayoutNode {
 
     serialize() {
         var result = "<" + this.debugName +
-            " width=" + (this.layout.width || 0) +
-            " height=" + (this.layout.height || 0) +
-            " top=" + this.layout.top +
-            " left=" + this.layout.left;
+            " width=" + (this.rect.width || 0) +
+            " height=" + (this.rect.height || 0) +
+            " top=" + this.rect.top +
+            " left=" + this.rect.left;
 
         if (!this.children.length)
             return result + " />";
