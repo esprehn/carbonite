@@ -13,7 +13,7 @@ class Element extends ParentNode {
         this._tagName = String(tagName);
         this._attributes = emptyAttributes;
         this._style = null;
-        Object.preventExtensions(this);
+        // Object.preventExtensions(this);
         if (attributes) {
             for (var pair of attributes)
                 this.setAttribute(pair[0], pair[1]);
@@ -66,7 +66,7 @@ class Element extends ParentNode {
     }
 }
 
-Object.preventExtensions(Element.prototype);
+// Object.preventExtensions(Element.prototype);
 
 exports.Element = Element;
 

@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 
 <style>
-#output {
-    white-space: pre;
+section {
+    border: 2px solid red;
+    margin: 16px;
+    padding: 8px;
 }
 </style>
 
-<script src="../dom/node.js"></script>
-<script src="../style/style.js"></script>
-<script src="../dom/parentnode.js"></script>
-<script src="../dom/documentfragment.js"></script>
-<script src="../dom/element.js"></script>
-<script src="../dom/text.js"></script>
+<script src="../dom/bindings/realdomparserbindings.js"></script>
+<script src="../dom/bindings/fakedomparserbindings.js"></script>
 <script src="../dom/domparser.js"></script>
 
-<div id="output"></div>
-
 <script>
-var compareInnerHtml = true;
 var multipler = 1;
 
 var output = document.getElementById("output");
@@ -33,32 +28,36 @@ function treeSize(node) {
     return count;
 }
 
+function benchmarkParser(name, callback) {
+    var section = document.createElement("section");
+    var startTime = Date.now();
+    var fragment = callback();
+    var time = Date.now() - startTime;
+    var output = name + " time: " + time + "ms, nodes: " + treeSize(fragment);
+    section.appendChild(document.createTextNode(output));
+    document.body.appendChild(section);
+}
+
 xhr.onload = function() {
     var markup = "";
-    if (String.prototype.repeat) {
-        markup = xhr.responseText.repeat(multipler);
-    } else {
-        for (var i = 0; i < multipler; i++)
-            markup += xhr.responseText;
-    }
-    var t, element;
-    if (compareInnerHtml) {
-        t = Date.now();
-        element = document.createElement("div");
+    for (var i = 0; i < multipler; i++)
+        markup += xhr.responseText;
+    
+    benchmarkParser("innerHTML", function() {
+        element = document.createElement("template");
         element.innerHTML = markup;
-        output.textContent += 'innerHTML time: ' + (Date.now() - t) + "\n";
-    }
-    output.textContent += 'markup size: ' + (markup.length) + "\n";
-    t = Date.now();
-    var parser = new DomParser(markup);
-    var fragment = parser.parse();
-    output.textContent += 'domparser time: ' + (Date.now() - t) + "\n";
-    if (fragment) {
-        output.textContent += 'frag nodes: ' + treeSize(fragment) + "\n";
-    }
-    if (compareInnerHtml) {
-        output.textContent += 'elem nodes: ' + (element.querySelectorAll("*").length) + "\n";
-    }
+        return element.content;
+    });
+
+    benchmarkParser("Real bindings", function() {
+        var parser = new DomParser(markup, RealDomParserBindings);
+        return parser.parse();
+    });
+
+    benchmarkParser("Fake bindings", function() {
+        var parser = new DomParser(markup, FakeDomParserBindings);
+        return parser.parse();
+    });
 };
 
 xhr.onerror = function() {

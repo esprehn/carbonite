@@ -7,7 +7,7 @@ class Text extends Node {
     constructor(value) {
         super();
         this._value = String(value || "");
-        Object.preventExtensions(this);
+        // Object.preventExtensions(this);
     }
 
     get textContent() {
@@ -27,4 +27,4 @@ class Text extends Node {
     }
 }
 
-Object.preventExtensions(Text.prototype);
+// Object.preventExtensions(Text.prototype);

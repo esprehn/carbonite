@@ -6,7 +6,7 @@
 class DocumentFragment extends ParentNode {
     constructor(children) {
         super(children);
-        Object.preventExtensions(this);
+        // Object.preventExtensions(this);
     }
 
     cloneNode(deep) {
@@ -19,4 +19,4 @@ class DocumentFragment extends ParentNode {
     }
 }
 
-Object.preventExtensions(Element.prototype);
+// Object.preventExtensions(Element.prototype);

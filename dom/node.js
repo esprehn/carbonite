@@ -124,4 +124,4 @@ class Node {
     }
 }
 
-Object.preventExtensions(Node.prototype);
+// Object.preventExtensions(Node.prototype);
